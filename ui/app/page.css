@@ -1,0 +1,69 @@
+.ex-app-container {
+  max-width: 900px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.ex-container {
+  display: flex;
+  gap: 20px;
+  height: 215px;
+  overflow: auto;
+}
+
+.ex-box {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  flex: 1;
+  padding: 5px 10px;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.ex-box table {
+  font-size: 0.9em;
+}
+
+.ex-ghost {
+  opacity: 0.3;
+  color: #666;
+}
+
+.ex-box-person {
+  position: absolute;
+  font-size: 2em;
+  right: 20px;
+}
+
+#ex-video {
+  position: relative;
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#ex-video video {
+  width: 100%;
+  display: block;
+}
+
+#ex-video canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Loading state styling */
+.loading {
+  text-align: center;
+  color: #666;
+}
