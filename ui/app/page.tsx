@@ -1,9 +1,9 @@
-import './facial-expressions.css';
-import {useContext, useEffect, useRef, useState} from 'react';
+'use client'
+import Image from "next/image";
+import {useContext, useEffect, useRef, useState} from "react";
 import {HeaderContext} from "@/app/context/header-context";
-import * as tf from "@tensorflow/tfjs";
-
-const description = "OpenVINO MobileNet-SSD pretrained object detection model + face 68 landmark, recognition and expression models.";
+import './page.css'
+// import * as tf from "@tensorflow/tfjs";
 
 interface ExpressionData {
   expressionName: string;
@@ -21,7 +21,7 @@ declare global {
   }
 }
 
-export default function FacialExpressions() {
+export default function Home() {
   // Trigger on component mount
   const {setTitle, setDescription} = useContext(HeaderContext);
   useEffect(() => {
@@ -169,8 +169,8 @@ export default function FacialExpressions() {
 
   // Destroy hook
   useEffect(() => {
-    tf.setBackend('webgl')
-    console.log(tf.getBackend ());
+    // tf.setBackend('webgl')
+    // console.log(tf.getBackend ());
 
     return () => {
       // Turn camera off
@@ -183,48 +183,79 @@ export default function FacialExpressions() {
     };
   }, []);
 
+
   return (
-    <div className="ex-app-container">
-      <div className="ex-container">
-        {!modelsLoaded ? (
-          <div className="ex-box">
-            Loading models
-          </div>
-        ) : faces.length === 0 ? (
-          <div className="ex-box">
-            Detecting faces ...
-          </div>
-        ) : (
-          <>
-            {faces.map((face, i) => (
-              <div className="ex-box" key={i}>
-                <table className="ex-box-data">
-                  <tbody>
-                  {face.data.map((item, j) => (
-                    <tr key={j}>
-                      <td>
+    <>
+      <div className="ex-app-container">
+        <div className="ex-container">
+          {!modelsLoaded ? (
+            <div className="ex-box">
+              Loading models
+            </div>
+          ) : faces.length === 0 ? (
+            <div className="ex-box">
+              Detecting faces ...
+            </div>
+          ) : (
+            <>
+              {faces.map((face, i) => (
+                <div className="ex-box" key={i}>
+                  <table className="ex-box-data">
+                    <tbody>
+                    {face.data.map((item, j) => (
+                      <tr key={j}>
+                        <td>
                           <span style={item.expressionName === face.title ? {fontWeight: 'bold', color: '#d70026'} : {}}>
                             {`${item.expressionName} ${item.expressionValue}%`}
                           </span>
-                      </td>
-                    </tr>
-                  ))}
-                  </tbody>
-                </table>
-              </div>
-            ))}
-            {faces.length === 1 && (
-              <div className="ex-box ex-ghost">
-                <span className="ex-box-person">#2</span>
-              </div>
-            )}
-          </>
-        )}
+                        </td>
+                      </tr>
+                    ))}
+                    </tbody>
+                  </table>
+                </div>
+              ))}
+              {faces.length === 1 && (
+                <div className="ex-box ex-ghost">
+                  <span className="ex-box-person">#2</span>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+        <div id="ex-video" ref={boxRef}>
+          <video ref={videoRef} width="100%" autoPlay />
+          <canvas ref={canvasRef} style={{ display: 'none' }} />
+        </div>
       </div>
-      <div id="ex-video" ref={boxRef}>
-        <video ref={videoRef} width="100%" autoPlay />
-        <canvas ref={canvasRef} style={{ display: 'none' }} />
+
+      <div style={{position: 'absolute', bottom: '20px'}}>
+        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+          <a
+            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
+            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              className="dark:invert"
+              src="/vercel.svg"
+              alt="Vercel logomark"
+              width={16}
+              height={16}
+            />
+            Deploy Now
+          </a>
+          <a
+            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
+            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Documentation
+          </a>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

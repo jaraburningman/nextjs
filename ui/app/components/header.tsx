@@ -14,9 +14,8 @@ export default function Header() {
       <button id="popover-toggle" popoverTarget="popover-menu">☰</button>
       <div id="popover-menu" popover="auto" anchor="popover-toggle">
         {/* Prefetched when the link is hovered or enters the viewport */}
-        <Link href="/">Hello</Link>
-        {/*<Link href="/history" onClick={closePopover}>History</Link>*/}
-        <Link href="/history">History</Link>
+        <Link href="/">Facial Expressions</Link>
+        <Link href="/history" onClick={closePopover}>History</Link>
         {/* No prefetching */}
         {/*<a href="/contact">Contact</a>*/}
       </div>

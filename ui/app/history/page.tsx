@@ -1,5 +1,4 @@
 'use client'
-import Image from "next/image";
 import {useContext, useEffect} from "react";
 import {HeaderContext} from "@/app/context/header-context";
 
@@ -9,7 +8,7 @@ export default function Home() {
   // // Trigger on component mount
   useEffect(() => {
     setTitle('History');
-    setDescription('Facial Expressions history');
+    setDescription('Should return some db data');
   }, []);
 
   return (
