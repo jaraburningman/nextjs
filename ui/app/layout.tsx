@@ -4,6 +4,7 @@ import "./globals.css";
 import "@/app/globals.css";
 import Header from "@/app/components/header";
 import {HeaderProvider} from "@/app/context/header-context";
+import {AppProvider} from "@/app/context/app-context";
 
 
 const geistSans = Geist({
@@ -31,12 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <HeaderProvider>
-          <Header />
-          <main className="flex items-center justify-center">
-            {children}
-          </main>
-        </HeaderProvider>
+        <AppProvider>
+          <HeaderProvider>
+            <Header />
+            <main className="flex items-center justify-center">
+              {children}
+            </main>
+          </HeaderProvider>
+        </AppProvider>
       </body>
     </html>
   );

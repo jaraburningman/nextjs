@@ -1,5 +1,5 @@
 'use client'
-import {createContext, useState} from "react";
+import React, {createContext, useState} from "react";
 
 type HeaderContextType = {
   title: string;
@@ -8,10 +8,15 @@ type HeaderContextType = {
   setDescription: (description: string) => void;
 }
 
-export const HeaderContext = createContext<HeaderContextType>();
+export const HeaderContext = createContext<HeaderContextType>({
+  title: '',
+  setTitle: () => {},
+  description: '',
+  setDescription: () => {}
+});
 
 // Provider component that manages the shared state
-export function HeaderProvider({ children }) {
+export function HeaderProvider({ children }: {children: React.ReactNode}) {
   const [title, setTitle] = useState("Title");
   const [description, setDescription] = useState("Description");
 

@@ -1,7 +1,8 @@
 'use client'
 import Image from "next/image";
-import {useContext, useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState, useLayoutEffect} from "react";
 import {HeaderContext} from "@/app/context/header-context";
+import {AppContext} from "@/app/context/app-context";
 import './facial-expressions.css'
 // import * as tf from "@tensorflow/tfjs";
 
@@ -24,15 +25,16 @@ declare global {
 export default function FacialExpressions() {
   // Trigger on component mount
   const {setTitle, setDescription} = useContext(HeaderContext);
+  const {detectionIntervalRef} = useContext(AppContext);
   useEffect(() => {
-    setTitle('Facial Expressions');
+    setTitle('Next.js playground + Facial Expressions');
     setDescription('OpenVINO MobileNet-SSD pretrained object detection model + face 68 landmark, recognition and expression models.');
   }, []);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
-  const streamRef = useRef<any>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   const [faces, setFaces] = useState<Face[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [modelsLoaded, setModelsLoaded] = useState(false);
@@ -93,8 +95,6 @@ export default function FacialExpressions() {
     loadModels();
   }, [isLoaded]);
 
-  const detectionIntervalRef = useRef<any>(undefined);
-
   useEffect(() => {
     if (!isLoaded || !videoRef.current || !canvasRef.current || !boxRef.current) return;
 
@@ -103,6 +103,7 @@ export default function FacialExpressions() {
     const box = boxRef.current;
 
     const handlePlay = async () => {
+      // Start processing stream
       const canvas = window.faceapi.createCanvasFromMedia(video);
       canvas.getContext('2d', { willReadFrequently: true }).clearRect(0, 0, canvas.width, canvas.height);
       box.append(canvas);
@@ -167,19 +168,23 @@ export default function FacialExpressions() {
     };
   }, [isLoaded]);
 
+  const stopDetectingStream = () => {
+    // Turn camera off
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+    }
+
+    // Stop processing stream
+    clearInterval(detectionIntervalRef.current);
+  }
+
   // Destroy hook
   useEffect(() => {
     // tf.setBackend('webgl')
     // console.log(tf.getBackend ());
 
     return () => {
-      // Turn camera off
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
-      }
-
-      // Stop processing stream
-      clearInterval(detectionIntervalRef.current);
+      stopDetectingStream();
     };
   }, []);
 
@@ -205,7 +210,7 @@ export default function FacialExpressions() {
                     {face.data.map((item, j) => (
                       <tr key={j}>
                         <td>
-                          <span style={item.expressionName === face.title ? {fontWeight: 'bold', color: '#d70026'} : {}}>
+                          <span style={item.expressionName === face.title ? {fontWeight: 'bold', color: 'purple'} : {}}>
                             {`${item.expressionName} ${item.expressionValue}%`}
                           </span>
                         </td>
