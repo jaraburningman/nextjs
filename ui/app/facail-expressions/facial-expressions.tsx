@@ -62,7 +62,7 @@ export default function FacialExpressions() {
   useEffect(() => {
     // Load face-api script dynamically
     const script = document.createElement('script');
-    script.src = '/face-api.js';
+    script.src = './face-api.js';
     script.defer = true;
     script.onload = () => {
       setIsLoaded(true);
@@ -80,10 +80,10 @@ export default function FacialExpressions() {
     const loadModels = async () => {
       try {
         await Promise.all([
-          window.faceapi.nets.ssdMobilenetv1.loadFromUri("/models"),
-          window.faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-          window.faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
-          window.faceapi.nets.faceExpressionNet.loadFromUri("/models"),
+          window.faceapi.nets.ssdMobilenetv1.loadFromUri("./models"),
+          window.faceapi.nets.faceLandmark68Net.loadFromUri("./models"),
+          window.faceapi.nets.faceRecognitionNet.loadFromUri("./models"),
+          window.faceapi.nets.faceExpressionNet.loadFromUri("./models"),
         ]);
         await startWebcam();
         setModelsLoaded(true);
@@ -244,7 +244,7 @@ export default function FacialExpressions() {
           >
             <Image
               className="dark:invert"
-              src="/vercel.svg"
+              src="./vercel.svg"
               alt="Vercel logomark"
               width={16}
               height={16}

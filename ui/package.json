@@ -9,8 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "npx next build",
+    "deploy": "npx gh-pages -d out --dotfiles"
   },
   "dependencies": {
     "next": "16.0.1",
