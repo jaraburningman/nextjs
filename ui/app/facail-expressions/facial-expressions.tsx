@@ -156,7 +156,7 @@ export default function FacialExpressions() {
             new window.faceapi.draw.DrawFaceLandmarks(result.landmarks, faceLandmarksConfig).draw(canvas);
           });
         }
-      }, 30);
+      }, 40);
 
       return () => clearInterval(detectionIntervalRef.current);
     };
