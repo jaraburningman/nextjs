@@ -1,14 +1,17 @@
 import type { NextConfig } from "next";
 
+const isProd = process.env.NODE_ENV === 'production';
+console.log('isProd ***************', isProd);
+
 const nextConfig: NextConfig = {
   /* config options here */
-  output: 'export',
+  output: 'export', // Static export for GitHub Pages
+  basePath: isProd ? '/nextjs' : '',
+  assetPrefix: isProd ? '/nextjs/' : '',
   images: {
-    unoptimized: true, // needed for GitHub Pages
+    unoptimized: true, // since GitHub Pages can't do dynamic image optimization
   },
-  basePath: '/jaraburningman', // 👈 replace with your repo name
-  assetPrefix: '/jaraburningman/',
-  distDir: 'build'
+
 };
 
 export default nextConfig;
