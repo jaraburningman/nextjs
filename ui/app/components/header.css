@@ -3,7 +3,9 @@ header {
   align-items: center;
   gap: 20px;
   padding: 20px 20px 20px 20px;
-  background: white;
+  /*background: white;*/
+  background: linear-gradient(-90deg,#007cf0,#00dfd8,#ff0080,#007cf0) 0 0/400% 100%;
+  color: white;
   box-shadow: 0 0px 20px rgba(0, 0, 0, 0.1);
 }
 

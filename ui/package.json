@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "predeploy": "npx next build",
+    "predeploy": "npm run build",
     "deploy": "npx gh-pages -d out --dotfiles"
   },
   "dependencies": {
