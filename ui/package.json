@@ -13,9 +13,14 @@
     "deploy": "npx gh-pages -d out --dotfiles"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.11.1",
+    "@reduxjs/toolkit": "^2.10.1",
     "next": "16.0.1",
+    "next-auth": "^4.24.13",
+    "pg": "^8.16.3",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

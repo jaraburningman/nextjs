@@ -63,3 +63,14 @@
   text-align: center;
   color: #666;
 }
+
+.ex-save {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}

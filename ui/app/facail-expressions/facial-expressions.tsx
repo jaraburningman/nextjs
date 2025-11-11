@@ -4,6 +4,7 @@ import {useContext, useEffect, useRef, useState, useLayoutEffect} from "react";
 import {HeaderContext} from "@/app/context/header-context";
 import {AppContext} from "@/app/context/app-context";
 import './facial-expressions.css'
+import {Expression} from "@/app/history/page";
 // import * as tf from "@tensorflow/tfjs";
 
 interface ExpressionData {
@@ -188,8 +189,22 @@ export default function FacialExpressions() {
     };
   }, []);
 
+  const save = async () => {
+    try {
+      const res = await fetch("/api/expressions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ expression: faces[0].title }),
+      });
+      const newExpression: Expression = await res.json();
+    } catch (err) {
+      console.error("Failed to add expression", err);
+    }
+  }
+
 
   return (
+    <>
     <div className="ex-app-container">
       <div className="ex-container">
         {!modelsLoaded ? (
@@ -232,5 +247,9 @@ export default function FacialExpressions() {
         <canvas ref={canvasRef} style={{ display: 'none' }} />
       </div>
     </div>
+    <button onClick={save} className="ex-save">
+      +
+    </button>
+  </>
   );
 }
